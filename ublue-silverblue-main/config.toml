@@ -1,0 +1,39 @@
+[customizations.installer.modules]
+enable = [
+  "org.fedoraproject.Anaconda.Modules.Localization"
+]
+disable = [
+  "org.fedoraproject.Anaconda.Modules.Users"
+]
+
+[customizations.installer.kickstart]
+contents = """
+
+graphical
+
+# Basic setup
+network --device=link --bootproto=dhcp --onboot=on --activate
+
+# Basic partitioning
+clearpart --all --disklabel=gpt
+autopart --encrypted --passphrase changeme --type btrfs --nohome --noswap
+
+# localisation
+keyboard gb
+lang en_IE
+timezone Europe/Dublin
+
+reboot
+
+%post --erroronfail
+
+# upgrades from this image after install
+bootc switch --mutate-in-place --transport registry cremin.dev/jonathan/ublue-silverblue-main:42
+
+# used during automatic image testing as finished marker
+if [ -c /dev/ttyS0 ]; then
+    # continue on errors here, because we used to omit --erroronfail
+    echo "Install finished" > /dev/ttyS0 || true
+fi
+%end
+"""

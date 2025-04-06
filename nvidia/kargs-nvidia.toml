@@ -1,0 +1,8 @@
+kargs = [
+    "mitigations=auto,nosmt",
+    "console=ttyS0,114800n8",
+    "video=vesafb:mtrr:3",
+    "rd.driver.blacklist=nouveau",
+    "modprobe.blacklist=nouveau",
+    "nvidia-drm.modeset=1"
+]
