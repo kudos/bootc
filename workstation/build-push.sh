@@ -11,10 +11,10 @@ CURRENT_IMAGE_ID=$(sudo podman images --format "{{.ID}}" cremin.dev/jonathan/ubl
 
 echo "Pulling base image"
 # ensure the base image is up to date
-sudo -E podman pull ghcr.io/ublue-os/silverblue-main:42
+podman pull ghcr.io/ublue-os/silverblue-main:42
 
 echo "Starting build"
-sudo -E podman build -t cremin.dev/jonathan/ublue-silverblue-main:42 .
+podman build -t cremin.dev/jonathan/ublue-silverblue-main:42 .
 
 NEW_IMAGE_ID=$(sudo podman images --format "{{.ID}}" cremin.dev/jonathan/ublue-silverblue-main:42)
 
@@ -25,9 +25,9 @@ if [ "$CURRENT_IMAGE_ID" = "$NEW_IMAGE_ID" ]; then
 else
     echo "Image updated, pushing to registry"
     # Add the tags
-    sudo -E podman tag cremin.dev/jonathan/ublue-silverblue-main:42 cremin.dev/jonathan/ublue-silverblue-main:42-${DATE_TAG} cremin.dev/jonathan/ublue-silverblue-main:latest
+    podman tag cremin.dev/jonathan/ublue-silverblue-main:42 cremin.dev/jonathan/ublue-silverblue-main:42-${DATE_TAG} cremin.dev/jonathan/ublue-silverblue-main:latest
     # Push the image
-    sudo -E podman push --authfile ~/.config/containers/auth.json cremin.dev/jonathan/ublue-silverblue-main:42-${DATE_TAG}
-    sudo -E podman push --authfile ~/.config/containers/auth.json cremin.dev/jonathan/ublue-silverblue-main:42
-    sudo -E podman push --authfile ~/.config/containers/auth.json cremin.dev/jonathan/ublue-silverblue-main:latest
+    podman push --authfile ~/.config/containers/auth.json cremin.dev/jonathan/ublue-silverblue-main:42-${DATE_TAG}
+    podman push --authfile ~/.config/containers/auth.json cremin.dev/jonathan/ublue-silverblue-main:42
+    podman push --authfile ~/.config/containers/auth.json cremin.dev/jonathan/ublue-silverblue-main:latest
 fi
