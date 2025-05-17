@@ -6,7 +6,7 @@ set -e
 cd "$(dirname "$0")"
 
 DATE_TAG=$(date "+%Y%m%d-%H%M%S")
-CURRENT_IMAGE_ID=$(sudo podman images --format "{{.ID}}" cremin.dev/jonathan/ublue-silverblue-main:42)
+CURRENT_IMAGE_ID=$(podman images --format "{{.ID}}" cremin.dev/jonathan/ublue-silverblue-main:42)
 
 
 echo "Pulling base image"
@@ -16,7 +16,7 @@ podman pull ghcr.io/ublue-os/silverblue-main:42
 echo "Starting build"
 podman build -t cremin.dev/jonathan/ublue-silverblue-main:42 .
 
-NEW_IMAGE_ID=$(sudo podman images --format "{{.ID}}" cremin.dev/jonathan/ublue-silverblue-main:42)
+NEW_IMAGE_ID=$(podman images --format "{{.ID}}" cremin.dev/jonathan/ublue-silverblue-main:42)
 
 
 # Start build and check if any layers were changed (looking for "Using cache" messages)
