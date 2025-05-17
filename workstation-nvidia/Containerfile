@@ -1,64 +1,70 @@
-FROM ghcr.io/ublue-os/silverblue-nvidia:41
+FROM ghcr.io/ublue-os/silverblue-nvidia:42
 
 COPY etc /etc
 
 RUN dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm && \
-    dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm && \
-    dnf clean all
+  dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm && \
+  dnf clean all
 
 RUN dnf remove -y \
-        ptyxis \
-        gnome-software \
-        htop \
-        gnome-classic-session \
-        gnome-shell-extension-apps-menu \
-        gnome-shell-extension-background-logo \
-        gnome-shell-extension-launch-new-instance \
-        gnome-shell-extension-places-menu \
-        gnome-shell-extension-window-list \
-        open-vm-tools \
-        open-vm-tools-desktop \
-        qemu-guest-agent \
-        spice-vdagent \
-        spice-webdavd \
-        virtualbox-guest-additions && \
-    dnf swap -y ffmpeg-free ffmpeg --allowerasing && \
-    dnf swap -y libavcodec-free libavcodec-freeworld --allowerasing && \
-    dnf group install -y multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin && \
-    dnf copr enable -y alternateved/eza && \
-    dnf install -y \
-        acpi \
-        akmod-v4l2loopback \
-        btop \
-        direnv \
-        distrobox \
-        eza \
-        git \
-        gnome-boxes \
-        gstreamer1-vaapi \
-        helm \
-        kubectl \
-        util-linux \
-        lm_sensors \
-        ncdu \
-        pavucontrol \
-        qemu-guest-agent \
-        sysstat \
-        tailscale \
-        vdpauinfo \
-        vulkan-tools \
-        zsh \
-        zsh-syntax-highlighting && \
-    # Clean up
-    dnf clean all
+  ptyxis \
+  gnome-software \
+  htop \
+  gnome-classic-session \
+  gnome-shell-extension-apps-menu \
+  gnome-shell-extension-background-logo \
+  gnome-shell-extension-launch-new-instance \
+  gnome-shell-extension-places-menu \
+  gnome-shell-extension-window-list \
+  open-vm-tools \
+  open-vm-tools-desktop \
+  qemu-guest-agent \
+  spice-vdagent \
+  spice-webdavd \
+  virtualbox-guest-additions && \
+  dnf swap -y ffmpeg-free ffmpeg --allowerasing && \
+  dnf swap -y libavcodec-free libavcodec-freeworld --allowerasing && \
+  dnf remove -y pipewire-libs-extra && \
+  dnf group install -y multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin --allowerasing && \
+  dnf copr enable -y alternateved/eza && \
+  dnf copr enable -y pgdev/ghostty && \
+  dnf install -y \
+  acpi \
+  akmod-v4l2loopback \
+  btop \
+  direnv \
+  dmidecode \
+  eza \
+  ffmpegthumbnailer \
+  ghostty \
+  git \
+  gnome-boxes \
+  gstreamer1-vaapi \
+  helm \
+  kubectl \
+  lm_sensors \
+  lshw \
+  nmcli \
+  mpv \
+  ncdu \
+  pavucontrol \
+  sysstat \
+  tailscale \
+  vdpauinfo \
+  vulkan-tools \
+  zsh \
+  zsh-syntax-highlighting && \
+  # Clean up
+  dnf clean all
+
+
+# Setup watercooling
+RUN dnf copr enable -y codifryed/CoolerControl && \
+  dnf install -y coolercontrol && \
+  systemctl enable coolercontrold
 
 # Remove btop and nvtop shortcuts
 RUN rm /usr/share/applications/btop.desktop /usr/share/applications/nvtop.desktop
-
-# Don't use the ghostty copr for now, it's broken on 42. Download the appimage in userland.
-# Todo: Try again when 42 is final.
-# RUN dnf copr enable -y pgdev/ghostty && \
-#   dnf install -y ghostty
 
 # Don't install 1password, the browser integration breaks because 1Password uses /opt.
 # I think this is polkit related.
@@ -66,16 +72,16 @@ RUN rm /usr/share/applications/btop.desktop /usr/share/applications/nvtop.deskto
 # COPY scripts/1password.sh /tmp/1password.sh
 # RUN /bin/sh /tmp/1password.sh
 
-RUN authselect enable-feature with-fingerprint
+# RUN authselect enable-feature with-fingerprint
 
 LABEL org.opencontainers.image.description="Built on ublue-os/silverblue-main, adding more batteries" \
-    org.opencontainers.image.source="https://cremin.dev/jonathan/bootc" \
-    org.opencontainers.image.title="ublue-silverblue-nvidia" \
-    org.opencontainers.image.url="https://cremin.dev/jonathan/bootc" \
-    org.opencontainers.image.created="" \
-    org.opencontainers.image.licenses="Unlicensed" \
-    org.opencontainers.image.revision="" \
-    org.opencontainers.image.version=""
+  org.opencontainers.image.source="https://cremin.dev/jonathan/bootc" \
+  org.opencontainers.image.title="ublue-silverblue-nvidia" \
+  org.opencontainers.image.url="https://cremin.dev/jonathan/bootc" \
+  org.opencontainers.image.created="" \
+  org.opencontainers.image.licenses="Unlicensed" \
+  org.opencontainers.image.revision="" \
+  org.opencontainers.image.version=""
 
 
 
@@ -84,7 +90,7 @@ LABEL org.opencontainers.image.description="Built on ublue-os/silverblue-main, a
 
 # RUN echo "blacklist nouveau" > /etc/modprobe.d/blacklist_nouveau.conf
 
-# RUN dnf install -y --allowerasing \   
+# RUN dnf install -y --allowerasing \
 #     akmod-nvidia \
 #     libva-nvidia-driver \
 #     nvidia-container-toolkit \
