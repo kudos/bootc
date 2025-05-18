@@ -6,7 +6,6 @@ on:
   schedule:
     - cron: "0 7 * * *"
 
-
 jobs:
   workstation:
     runs-on: self-hosted
@@ -15,8 +14,6 @@ jobs:
         run: echo "NOW=$(date +'%Y%m%d-%H%M%S')" >> $GITHUB_ENV
       - name: Fix for bad os check
         run: echo "RUNNER_OS=Linux" >> $GITHUB_ENV
-      - name: Echo current date
-        run: echo $NOW
       - name: Login to Forgejo Registry
         uses: https://cremin.dev/actions/podman-login@v1
         with:
