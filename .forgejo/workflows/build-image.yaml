@@ -22,7 +22,15 @@ jobs:
           password: ${{ secrets.FORGEJO_REGISTRY_TOKEN }}
       - name: Check out repository
         uses: https://cremin.dev/actions/checkout@v4
+      - name: Check if workstation was changed
+        uses: https://cremin.dev/actions/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            src:
+              - 'workstation/**'
       - name: Build image
+        if: steps.changes.outputs.src == 'true'
         uses: https://cremin.dev/actions/buildah-build@v2
         with:
           containerfiles: ./workstation/Containerfile
@@ -32,6 +40,7 @@ jobs:
           image: cremin.dev/jonathan/ublue-silverblue-main
           tags: 42 latest 42-${{ env.NOW }}
       - name: Push image
+        if: steps.changes.outputs.src == 'true'
         uses: https://cremin.dev/actions/push-to-registry@v2
         with:
           registry: cremin.dev/jonathan
@@ -46,8 +55,6 @@ jobs:
         run: echo "NOW=$(date +'%Y%m%d-%H%M%S')" >> $GITHUB_ENV
       - name: Fix for bad os check
         run: echo "RUNNER_OS=Linux" >> $GITHUB_ENV
-      - name: Echo current date
-        run: echo $NOW
       - name: Login to Forgejo Registry
         uses: https://cremin.dev/actions/podman-login@v1
         with:
@@ -56,7 +63,15 @@ jobs:
           password: ${{ secrets.FORGEJO_REGISTRY_TOKEN }}
       - name: Check out repository
         uses: https://cremin.dev/actions/checkout@v4
+      - name: Check if workstation-nvidia was changed
+        uses: https://cremin.dev/actions/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            src:
+              - 'workstation-nvidia/**'
       - name: Build image
+        if: steps.changes.outputs.src == 'true'
         uses: https://cremin.dev/actions/buildah-build@v2
         with:
           containerfiles: ./workstation-nvidia/Containerfile
@@ -66,6 +81,7 @@ jobs:
           image: cremin.dev/jonathan/ublue-silverblue-nvidia
           tags: 42 latest 42-${{ env.NOW }}
       - name: Push image
+        if: steps.changes.outputs.src == 'true'
         uses: https://cremin.dev/actions/push-to-registry@v2
         with:
           registry: cremin.dev/jonathan
@@ -73,3 +89,4 @@ jobs:
           password: ${{ secrets.FORGEJO_REGISTRY_TOKEN }}
           image: ublue-silverblue-nvidia
           tags: 42 latest 42-${{ env.NOW }}
+
