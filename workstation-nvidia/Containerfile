@@ -48,6 +48,7 @@ RUN dnf remove -y \
   mpv \
   ncdu \
   pavucontrol \
+  podman-compose \
   sysstat \
   tailscale \
   vdpauinfo \
@@ -61,7 +62,12 @@ RUN dnf remove -y \
 # Setup watercooling
 RUN dnf copr enable -y codifryed/CoolerControl && \
   dnf install -y coolercontrol && \
-  systemctl enable coolercontrold
+  systemctl enable coolercontrold && \
+  dnf clean all
+
+RUN dnf config-manager addrepo --from-repofile=https://rpm.releases.hashicorp.com/fedora/hashicorp.repo && \
+  dnf install -y terraform && \
+  dnf clean all
 
 # Remove btop and nvtop shortcuts
 RUN rm /usr/share/applications/btop.desktop /usr/share/applications/nvtop.desktop
