@@ -65,12 +65,6 @@ RUN dnf config-manager addrepo --from-repofile=https://rpm.releases.hashicorp.co
 # Remove btop and nvtop shortcuts
 RUN rm /usr/share/applications/btop.desktop /usr/share/applications/nvtop.desktop
 
-# Don't install 1password, the browser integration breaks because 1Password uses /opt.
-# I think this is polkit related.
-# RUN mkdir -p /var/opt
-# COPY scripts/1password.sh /tmp/1password.sh
-# RUN /bin/sh /tmp/1password.sh
-
 RUN authselect enable-feature with-fingerprint
 
 LABEL org.opencontainers.image.description="Built on ublue-os/silverblue-main, adding more batteries" \

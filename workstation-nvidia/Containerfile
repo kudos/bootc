@@ -58,7 +58,6 @@ RUN dnf remove -y \
   # Clean up
   dnf clean all
 
-
 # Setup watercooling
 RUN dnf copr enable -y codifryed/CoolerControl && \
   dnf install -y coolercontrol && \
@@ -72,14 +71,6 @@ RUN dnf config-manager addrepo --from-repofile=https://rpm.releases.hashicorp.co
 # Remove btop and nvtop shortcuts
 RUN rm /usr/share/applications/btop.desktop /usr/share/applications/nvtop.desktop
 
-# Don't install 1password, the browser integration breaks because 1Password uses /opt.
-# I think this is polkit related.
-# RUN mkdir -p /var/opt
-# COPY scripts/1password.sh /tmp/1password.sh
-# RUN /bin/sh /tmp/1password.sh
-
-# RUN authselect enable-feature with-fingerprint
-
 LABEL org.opencontainers.image.description="Built on ublue-os/silverblue-main, adding more batteries" \
   org.opencontainers.image.source="https://cremin.dev/jonathan/bootc" \
   org.opencontainers.image.title="ublue-silverblue-nvidia" \
@@ -89,27 +80,3 @@ LABEL org.opencontainers.image.description="Built on ublue-os/silverblue-main, a
   org.opencontainers.image.revision="" \
   org.opencontainers.image.version=""
 
-
-
-
-# FROM cremin.dev/jonathan/fedora-bootc-base:42
-
-# RUN echo "blacklist nouveau" > /etc/modprobe.d/blacklist_nouveau.conf
-
-# RUN dnf install -y --allowerasing \
-#     akmod-nvidia \
-#     libva-nvidia-driver \
-#     nvidia-container-toolkit \
-#     nvidia-vaapi-driver \
-#     xorg-x11-drv-nvidia \
-#     xorg-x11-drv-nvidia-cuda \
-#     xorg-x11-drv-nvidia-cuda-libs \
-#     xorg-x11-drv-nvidia-power && \
-#     # Clean up
-#     dnf clean all
-
-# RUN akmods --force --kernels `rpm -q --queryformat '%{VERSION}-%{RELEASE}.%{ARCH}' kernel-devel`
-
-# RUN systemctl enable nvidia-toolkit-firstboot.service
-
-# COPY kargs-nvidia.toml /usr/lib/bootc/kargs.d/nvidia.toml
