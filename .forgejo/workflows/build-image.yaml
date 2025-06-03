@@ -18,11 +18,12 @@ jobs:
         uses: https://cremin.dev/actions/podman-login@v1
         with:
           registry: cremin.dev
-          username: ${{ github.actor }}
+          username: ${{ vars.FORGEJO_REGISTRY_USER }}
           password: ${{ secrets.FORGEJO_REGISTRY_TOKEN }}
       - name: Check out repository
         uses: https://cremin.dev/actions/checkout@v4
       - name: Check if workstation was changed
+        if: ${{ github.event_name != 'schedule' }}
         uses: https://cremin.dev/actions/paths-filter@v3
         id: changes
         with:
@@ -30,7 +31,7 @@ jobs:
             src:
               - 'workstation/**'
       - name: Build image
-        if: steps.changes.outputs.src == 'true'
+        if: github.event_name == 'schedule' || steps.changes.outputs.src == 'true'
         uses: https://cremin.dev/actions/buildah-build@v2
         with:
           containerfiles: ./workstation/Containerfile
@@ -40,11 +41,11 @@ jobs:
           image: cremin.dev/jonathan/ublue-silverblue-main
           tags: 42 latest 42-${{ env.NOW }}
       - name: Push image
-        if: steps.changes.outputs.src == 'true'
+        if: github.event_name == 'schedule' || steps.changes.outputs.src == 'true'
         uses: https://cremin.dev/actions/push-to-registry@v2
         with:
           registry: cremin.dev/jonathan
-          username: ${{ github.actor }}
+          username: ${{ vars.FORGEJO_REGISTRY_USER }}
           password: ${{ secrets.FORGEJO_REGISTRY_TOKEN }}
           image: ublue-silverblue-main
           tags: 42 latest 42-${{ env.NOW }}
@@ -59,11 +60,12 @@ jobs:
         uses: https://cremin.dev/actions/podman-login@v1
         with:
           registry: cremin.dev
-          username: ${{ github.actor }}
+          username: ${{ vars.FORGEJO_REGISTRY_USER }}
           password: ${{ secrets.FORGEJO_REGISTRY_TOKEN }}
       - name: Check out repository
         uses: https://cremin.dev/actions/checkout@v4
       - name: Check if workstation-nvidia was changed
+        if: ${{ github.event_name != 'schedule' }}
         uses: https://cremin.dev/actions/paths-filter@v3
         id: changes
         with:
@@ -71,7 +73,7 @@ jobs:
             src:
               - 'workstation-nvidia/**'
       - name: Build image
-        if: steps.changes.outputs.src == 'true'
+        if: github.event_name == 'schedule' || steps.changes.outputs.src == 'true'
         uses: https://cremin.dev/actions/buildah-build@v2
         with:
           containerfiles: ./workstation-nvidia/Containerfile
@@ -81,12 +83,11 @@ jobs:
           image: cremin.dev/jonathan/ublue-silverblue-nvidia
           tags: 42 latest 42-${{ env.NOW }}
       - name: Push image
-        if: steps.changes.outputs.src == 'true'
+        if: github.event_name == 'schedule' || steps.changes.outputs.src == 'true'
         uses: https://cremin.dev/actions/push-to-registry@v2
         with:
           registry: cremin.dev/jonathan
-          username: ${{ github.actor }}
+          username: ${{ vars.FORGEJO_REGISTRY_USER }}
           password: ${{ secrets.FORGEJO_REGISTRY_TOKEN }}
           image: ublue-silverblue-nvidia
           tags: 42 latest 42-${{ env.NOW }}
-
