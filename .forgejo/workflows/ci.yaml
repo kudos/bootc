@@ -20,7 +20,7 @@ jobs:
           registry: cremin.dev
           username: ${{ vars.FORGEJO_REGISTRY_USER }}
           password: ${{ secrets.FORGEJO_REGISTRY_TOKEN }}
-          logout: false
+          auth_file_path: /run/user/1001/containers/auth.json
       - name: Check out repository
         uses: https://cremin.dev/actions/checkout@v4
       - name: Get commit message
@@ -46,7 +46,6 @@ jobs:
           containerfiles: ./workstation/Containerfile
           context: ./workstation
           oci: true
-          layers: true
           image: cremin.dev/jonathan/ublue-silverblue-main
           tags: 42 latest 42-${{ env.NOW }}
       - name: Push image
@@ -71,7 +70,7 @@ jobs:
           registry: cremin.dev
           username: ${{ vars.FORGEJO_REGISTRY_USER }}
           password: ${{ secrets.FORGEJO_REGISTRY_TOKEN }}
-          logout: false
+          auth_file_path: /run/user/1001/containers/auth.json
       - name: Check out repository
         uses: https://cremin.dev/actions/checkout@v4
       - name: Get commit message
@@ -96,8 +95,6 @@ jobs:
         with:
           containerfiles: ./workstation-nvidia/Containerfile
           context: ./workstation-nvidia
-          oci: true
-          layers: true
           image: cremin.dev/jonathan/ublue-silverblue-nvidia
           tags: 42 latest 42-${{ env.NOW }}
       - name: Push image
