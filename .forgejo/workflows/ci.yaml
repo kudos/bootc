@@ -34,7 +34,7 @@ jobs:
       - name: Fetch latest image
         if: github.event_name == 'schedule' || steps.changes.outputs.src == 'true'
         run: |
-          podman pull cremin.dev/jonathan/ublue-silverblue-main:42
+          podman pull ghcr.io/ublue-os/silverblue-main:42
       - name: Build image
         if: github.event_name == 'schedule' || steps.changes.outputs.src == 'true'
         uses: https://cremin.dev/actions/buildah-build@v2
@@ -81,7 +81,7 @@ jobs:
       - name: Fetch latest image
         if: github.event_name == 'schedule' || steps.changes.outputs.src == 'true'
         run: |
-          podman pull cremin.dev/jonathan/ublue-silverblue-nvidia:42
+          podman pull ghcr.io/ublue-os/silverblue-main:42
       - name: Build image
         if: github.event_name == 'schedule' || steps.changes.outputs.src == 'true'
         uses: https://cremin.dev/actions/buildah-build@v2
