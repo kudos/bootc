@@ -27,29 +27,20 @@ jobs:
         id: commit_message
         run: |
           echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
-      - name: Check if workstation was changed
-        if: ${{ github.event_name != 'schedule' }}
-        uses: https://cremin.dev/actions/paths-filter@v3
-        id: changes
-        with:
-          filters: |
-            src:
-              - 'workstation/**'
       - name: Fetch latest image
-        if: github.event_name == 'schedule' || steps.changes.outputs.src == 'true' || grep -q '!force' ${{ steps.commit_message.outputs.message }}
         run: |
           podman pull ghcr.io/ublue-os/silverblue-main:42
       - name: Build image
-        if: github.event_name == 'schedule' || steps.changes.outputs.src == 'true' || grep -q '!force' ${{ steps.commit_message.outputs.message }}
         uses: https://cremin.dev/actions/buildah-build@v2
         with:
-          containerfiles: ./workstation/Containerfile
-          context: ./workstation
-          oci: true
+          containerfiles: ./Containerfile
           image: cremin.dev/jonathan/ublue-silverblue-main
           tags: 42 latest 42-${{ env.NOW }}
+          build-args: |
+            SOURCE_IMAGE=ghcr.io/ublue-os/silverblue-main
+            FEDORA_MAJOR_VERSION=42
+            NVIDIA_BUILD=false
       - name: Push image
-        if: github.event_name == 'schedule' || steps.changes.outputs.src == 'true' || grep -q '!force' ${{ steps.commit_message.outputs.message }}
         uses: https://cremin.dev/actions/push-to-registry@v2
         with:
           registry: cremin.dev
@@ -77,28 +68,20 @@ jobs:
         id: commit_message
         run: |
           echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
-      - name: Check if workstation-nvidia was changed
-        if: ${{ github.event_name != 'schedule' }}
-        uses: https://cremin.dev/actions/paths-filter@v3
-        id: changes
-        with:
-          filters: |
-            src:
-              - 'workstation-nvidia/**'
       - name: Fetch latest image
-        if: github.event_name == 'schedule' || steps.changes.outputs.src == 'true' || grep -q '!force' ${{ steps.commit_message.outputs.message }}
         run: |
-          podman pull ghcr.io/ublue-os/silverblue-main:42
+          podman pull ghcr.io/ublue-os/silverblue-nvidia:42
       - name: Build image
-        if: github.event_name == 'schedule' || steps.changes.outputs.src == 'true' || grep -q '!force' ${{ steps.commit_message.outputs.message }}
         uses: https://cremin.dev/actions/buildah-build@v2
         with:
-          containerfiles: ./workstation-nvidia/Containerfile
-          context: ./workstation-nvidia
+          containerfiles: ./Containerfile
           image: cremin.dev/jonathan/ublue-silverblue-nvidia
           tags: 42 latest 42-${{ env.NOW }}
+          build-args: |
+            SOURCE_IMAGE=ghcr.io/ublue-os/silverblue-nvidia
+            FEDORA_MAJOR_VERSION=42
+            NVIDIA_BUILD=true
       - name: Push image
-        if: github.event_name == 'schedule' || steps.changes.outputs.src == 'true' || grep -q '!force' ${{ steps.commit_message.outputs.message }}
         uses: https://cremin.dev/actions/push-to-registry@v2
         with:
           registry: cremin.dev
