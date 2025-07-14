@@ -48,6 +48,8 @@ jobs:
           password: ${{ secrets.FORGEJO_REGISTRY_TOKEN }}
           image: jonathan/ublue-silverblue-main
           tags: 42 latest 42-${{ env.NOW }}
+      - name: Delete local image
+        run: podman rmi jonathan/ublue-silverblue-main:42 jonathan/ublue-silverblue-main:latest jonathan/ublue-silverblue-main:42-${{ env.NOW }}
   workstation-nvidia:
     runs-on: self-hosted
     steps:
@@ -89,3 +91,5 @@ jobs:
           password: ${{ secrets.FORGEJO_REGISTRY_TOKEN }}
           image: jonathan/ublue-silverblue-nvidia
           tags: 42 latest 42-${{ env.NOW }}
+      - name: Delete local image
+        run: podman rmi jonathan/ublue-silverblue-nvidia:42 jonathan/ublue-silverblue-nvidia:latest jonathan/ublue-silverblue-nvidia:42-${{ env.NOW }}
