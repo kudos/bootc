@@ -1,5 +1,7 @@
 name: ci
 
+enable-email-notifications: true
+
 on:
   push:
     branches: [main]
