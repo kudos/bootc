@@ -14,13 +14,16 @@ RUN ./scripts/install-common.sh
 # My nvidia workstation needs this for its watercooling.
 RUN if [[ "$NVIDIA_BUILD" == "true" ]]; then ./scripts/install-coolercontrol.sh; fi
 
+# Triggers on non thinkpads, do not want
+RUN rm /lib/udev/rules.d/99-thinkpad-thresholds-udev.rules
+
 RUN authselect enable-feature with-fingerprint
 
 LABEL org.opencontainers.image.description="Built on ${SOURCE_IMAGE}:${FEDORA_MAJOR_VERSION}, adding more batteries" \
-  org.opencontainers.image.source="https://cremin.dev/jonathan/bootc" \
-  org.opencontainers.image.title="silverblue" \
-  org.opencontainers.image.url="https://cremin.dev/jonathan/bootc" \
-  org.opencontainers.image.created="" \
-  org.opencontainers.image.licenses="Unlicensed" \
-  org.opencontainers.image.revision="" \
-  org.opencontainers.image.version=""
+    org.opencontainers.image.source="https://cremin.dev/jonathan/bootc" \
+    org.opencontainers.image.title="silverblue" \
+    org.opencontainers.image.url="https://cremin.dev/jonathan/bootc" \
+    org.opencontainers.image.created="" \
+    org.opencontainers.image.licenses="Unlicensed" \
+    org.opencontainers.image.revision="" \
+    org.opencontainers.image.version=""
