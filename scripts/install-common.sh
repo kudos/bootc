@@ -44,6 +44,7 @@ dnf install -y \
     gnome-boxes \
     gstreamer1-vaapi \
     helm \
+    incus \
     iperf3 \
     kubectl \
     lm_sensors \
