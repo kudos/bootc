@@ -43,6 +43,7 @@ dnf install -y \
     git \
     gnome-boxes \
     gstreamer1-vaapi \
+    helix \
     helm \
     incus \
     iperf3 \

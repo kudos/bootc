@@ -35,7 +35,8 @@ jobs:
       - name: Build image
         uses: https://cremin.dev/actions/buildah-build@v2
         with:
-          containerfiles: ./Containerfile
+          containerfiles: ./workstation/Containerfile
+          context: ./workstation
           image: cremin.dev/jonathan/ublue-silverblue-main
           tags: 42 latest 42-${{ env.NOW }}
           build-args: |
@@ -78,7 +79,8 @@ jobs:
       - name: Build image
         uses: https://cremin.dev/actions/buildah-build@v2
         with:
-          containerfiles: ./Containerfile
+          containerfiles: ./workstation/Containerfile
+          context: ./workstation
           image: cremin.dev/jonathan/ublue-silverblue-nvidia
           tags: 42 latest 42-${{ env.NOW }}
           build-args: |
