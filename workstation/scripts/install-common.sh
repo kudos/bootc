@@ -50,11 +50,15 @@ dnf install -y \
     kubectl \
     lm_sensors \
     lshw \
+    nautilus-python \
     nmcli \
     mpv \
     ncdu \
     pavucontrol \
     podman-compose \
+    python3-pygit2 \
+    python3-dbus \
+    python3-secretstorage \
     sysstat \
     tailscale \
     terraform \
