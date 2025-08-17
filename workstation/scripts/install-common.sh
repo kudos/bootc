@@ -6,7 +6,6 @@ dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-releas
 dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 dnf remove -y \
     ptyxis \
-    gnome-software \
     htop \
     gnome-classic-session \
     gnome-shell-extension-apps-menu \
