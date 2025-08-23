@@ -28,7 +28,7 @@ dnf5 config-manager setopt rpmfusion-nonfree-updates-testing.enabled=1 rpmfusion
 dnf group install -y multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin --allowerasing
 dnf5 config-manager setopt rpmfusion-nonfree-updates-testing.enabled=0 rpmfusion-free-updates-testing.enabled=0
 dnf copr enable -y alternateved/eza
-dnf copr enable -y pgdev/ghostty
+dnf copr enable -y alternateved/ghostty
 dnf config-manager addrepo --from-repofile=https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
 dnf install -y \
     acpi \
