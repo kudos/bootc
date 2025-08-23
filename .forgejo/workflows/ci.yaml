@@ -17,12 +17,12 @@ jobs:
       - name: Fix for bad os check
         run: echo "RUNNER_OS=Linux" >> $GITHUB_ENV
       - name: Login to Forgejo Registry
-        uses: https://cremin.dev/actions/podman-login@v1
+        uses: https://cremin.dev/jonathan/podman-login-fixed@v1
         with:
           registry: cremin.dev
           username: ${{ vars.FORGEJO_REGISTRY_USER }}
           password: ${{ secrets.FORGEJO_REGISTRY_TOKEN }}
-          auth_file_path: /run/user/1001/containers/auth.json
+          auth_file_path: /run/containers/auth.json
       - name: Check out repository
         uses: https://cremin.dev/actions/checkout@v4
       - name: Get commit message
@@ -61,12 +61,12 @@ jobs:
       - name: Fix for bad os check
         run: echo "RUNNER_OS=Linux" >> $GITHUB_ENV
       - name: Login to Forgejo Registry
-        uses: https://cremin.dev/actions/podman-login@v1
+        uses: https://cremin.dev/jonathan/podman-login-fixed@v1
         with:
           registry: cremin.dev
           username: ${{ vars.FORGEJO_REGISTRY_USER }}
           password: ${{ secrets.FORGEJO_REGISTRY_TOKEN }}
-          auth_file_path: /run/user/1001/containers/auth.json
+          auth_file_path: /run/containers/auth.json
       - name: Check out repository
         uses: https://cremin.dev/actions/checkout@v4
       - name: Get commit message
