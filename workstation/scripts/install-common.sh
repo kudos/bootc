@@ -24,11 +24,13 @@ dnf swap -y ffmpeg-free ffmpeg --allowerasing
 dnf swap -y libavcodec-free libavcodec-freeworld --allowerasing
 dnf remove -y pipewire-libs-extra
 # rpmfusion doesn't always have their media packages in sync with Fedora
-dnf5 config-manager setopt rpmfusion-nonfree-updates-testing.enabled=1 rpmfusion-free-updates-testing.enabled=1
+dnf config-manager setopt rpmfusion-nonfree-updates-testing.enabled=1 rpmfusion-free-updates-testing.enabled=1
 dnf group install -y multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin --allowerasing
-dnf5 config-manager setopt rpmfusion-nonfree-updates-testing.enabled=0 rpmfusion-free-updates-testing.enabled=0
+dnf config-manager setopt rpmfusion-nonfree-updates-testing.enabled=0 rpmfusion-free-updates-testing.enabled=0
 dnf copr enable -y alternateved/eza
 dnf copr enable -y alternateved/ghostty
+dnf copr enable -y atim/starship
+dnf config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/shells:zsh-users:zsh-autosuggestions/Fedora_Rawhide/shells:zsh-users:zsh-autosuggestions.repo
 dnf config-manager addrepo --from-repofile=https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
 dnf install -y \
     acpi \
@@ -55,15 +57,18 @@ dnf install -y \
     ncdu \
     pavucontrol \
     podman-compose \
+    podman-docker \
     python3-pygit2 \
     python3-dbus \
     python3-secretstorage \
+    starship \
     sysstat \
     tailscale \
     terraform \
     vdpauinfo \
     vulkan-tools \
     zsh \
+    zsh-autosuggestions \
     zsh-syntax-highlighting
 
 dnf clean all
