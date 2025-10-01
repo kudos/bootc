@@ -22,7 +22,7 @@ jobs:
           registry: cremin.dev
           username: ${{ vars.FORGEJO_REGISTRY_USER }}
           password: ${{ secrets.FORGEJO_REGISTRY_TOKEN }}
-          auth_file_path: /run/containers/auth.json
+          auth_file_path: /tmp/podman-run-1001/containers/auth.json
       - name: Check out repository
         uses: https://cremin.dev/actions/checkout@v4
       - name: Get commit message
@@ -66,7 +66,7 @@ jobs:
           registry: cremin.dev
           username: ${{ vars.FORGEJO_REGISTRY_USER }}
           password: ${{ secrets.FORGEJO_REGISTRY_TOKEN }}
-          auth_file_path: /run/containers/auth.json
+          auth_file_path: /tmp/podman-run-1001/containers/auth.json
       - name: Check out repository
         uses: https://cremin.dev/actions/checkout@v4
       - name: Get commit message
