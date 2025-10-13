@@ -2,6 +2,8 @@
 
 set -e
 
+cd "$(dirname "$0")"
+
 SOURCE_IMAGE=ghcr.io/ublue-os/silverblue-main
 FEDORA_MAJOR_VERSION=42
 IMAGE=cremin.dev/jonathan/ublue-silverblue-main

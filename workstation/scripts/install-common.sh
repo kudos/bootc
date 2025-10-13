@@ -55,6 +55,8 @@ dnf install -y \
     nmcli \
     mpv \
     ncdu \
+    nodejs \
+    nut \
     pavucontrol \
     podman-compose \
     podman-docker \
@@ -65,8 +67,10 @@ dnf install -y \
     sysstat \
     tailscale \
     terraform \
+    uv \
     vdpauinfo \
     vulkan-tools \
+    wol \
     zsh \
     zsh-autosuggestions \
     zsh-syntax-highlighting
