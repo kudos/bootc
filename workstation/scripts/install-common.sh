@@ -38,6 +38,7 @@ dnf install -y \
     btop \
     direnv \
     dmidecode \
+    duf \
     eza \
     ffmpegthumbnailer \
     ghostty \
@@ -50,6 +51,7 @@ dnf install -y \
     iperf3 \
     kubectl \
     lm_sensors \
+    lsd \
     lshw \
     nautilus-python \
     nmcli \
@@ -60,6 +62,7 @@ dnf install -y \
     pavucontrol \
     podman-compose \
     podman-docker \
+    procs \
     python3-pygit2 \
     python3-dbus \
     python3-secretstorage \
