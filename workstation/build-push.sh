@@ -5,7 +5,7 @@ set -e
 cd "$(dirname "$0")"
 
 SOURCE_IMAGE=ghcr.io/ublue-os/silverblue-main
-FEDORA_MAJOR_VERSION=42
+FEDORA_MAJOR_VERSION=43
 IMAGE=cremin.dev/jonathan/ublue-silverblue-main
 NVIDIA_BUILD=false
 PUSH=true
@@ -21,7 +21,6 @@ done
 if [[ $NVIDIA_BUILD == true ]]; then
     echo "Building NVIDIA image"
     SOURCE_IMAGE=ghcr.io/ublue-os/silverblue-nvidia
-    FEDORA_MAJOR_VERSION="42"
     IMAGE=cremin.dev/jonathan/ublue-silverblue-nvidia
 else
     echo "Building standard image"

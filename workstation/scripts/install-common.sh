@@ -32,9 +32,10 @@ dnf copr enable -y alternateved/ghostty
 dnf copr enable -y atim/starship
 dnf config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/shells:zsh-users:zsh-autosuggestions/Fedora_Rawhide/shells:zsh-users:zsh-autosuggestions.repo
 dnf config-manager addrepo --from-repofile=https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
+# No packages for 43 yet, but they're probably still compatible
+sed -i 's/\$releasever/42/g' /etc/yum.repos.d/hashicorp.repo
 dnf install -y \
     acpi \
-    akmod-v4l2loopback \
     btop \
     direnv \
     dmidecode \
@@ -47,7 +48,6 @@ dnf install -y \
     gstreamer1-vaapi \
     helix \
     helm \
-    incus \
     iperf3 \
     kubectl \
     lm_sensors \
