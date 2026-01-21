@@ -38,6 +38,9 @@ rpm --import https://rpm.releases.hashicorp.com/gpg
 dnf config-manager addrepo --from-repofile=https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
 # No packages for 43 yet, but they're probably still compatible
 sed -i 's/\$releasever/42/g' /etc/yum.repos.d/hashicorp.repo
+# Firefox Nightly
+dnf config-manager addrepo --id=mozilla --set=baseurl=https://packages.mozilla.org/rpm/firefox --set=gpgcheck=0 --set=repo_gpgcheck=0
+dnf makecache --refresh
 dnf install -y \
     acpi \
     btop \
@@ -46,6 +49,7 @@ dnf install -y \
     duf \
     eza \
     ffmpegthumbnailer \
+    firefox-nightly \
     ghostty \
     git \
     gnome-boxes \
