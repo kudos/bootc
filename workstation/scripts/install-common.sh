@@ -42,6 +42,7 @@ sed -i 's/\$releasever/42/g' /etc/yum.repos.d/hashicorp.repo
 dnf config-manager addrepo --id=mozilla --set=baseurl=https://packages.mozilla.org/rpm/firefox --set=gpgcheck=0 --set=repo_gpgcheck=0
 dnf makecache --refresh
 dnf install -y \
+    7zip \
     acpi \
     btop \
     direnv \
@@ -78,6 +79,7 @@ dnf install -y \
     sysstat \
     tailscale \
     terraform \
+    unar \
     uv \
     vdpauinfo \
     vulkan-tools \
