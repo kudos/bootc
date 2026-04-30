@@ -13,6 +13,7 @@ dnf remove -y \
     gnome-shell-extension-launch-new-instance \
     gnome-shell-extension-places-menu \
     gnome-shell-extension-window-list \
+    gnome-software \
     open-vm-tools \
     open-vm-tools-desktop \
     qemu-guest-agent \
@@ -32,6 +33,7 @@ dnf install steam -y
 dnf copr enable -y alternateved/eza
 dnf copr enable -y alternateved/ghostty
 dnf copr enable -y atim/starship
+dnf copr enable -y aldantanneo/jj-vcs
 dnf config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/shells:zsh-users:zsh-autosuggestions/Fedora_Rawhide/shells:zsh-users:zsh-autosuggestions.repo
 # Import the GPG key first
 rpm --import https://rpm.releases.hashicorp.com/gpg
@@ -58,6 +60,7 @@ dnf install -y \
     helix \
     helm \
     iperf3 \
+    jj-cli \
     kubectl \
     lm_sensors \
     lsd \
@@ -83,6 +86,7 @@ dnf install -y \
     uv \
     vdpauinfo \
     vulkan-tools \
+    waydroid \
     wol \
     zsh \
     zsh-autosuggestions \

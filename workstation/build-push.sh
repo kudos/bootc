@@ -5,7 +5,7 @@ set -e
 cd "$(dirname "$0")"
 
 SOURCE_IMAGE=ghcr.io/ublue-os/silverblue-main
-FEDORA_MAJOR_VERSION=43
+FEDORA_MAJOR_VERSION=44
 IMAGE=cremin.dev/jonathan/ublue-silverblue-main
 NVIDIA_BUILD=false
 PUSH=true
