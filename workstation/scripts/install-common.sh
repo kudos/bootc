@@ -35,6 +35,7 @@ dnf copr enable -y alternateved/ghostty
 dnf copr enable -y atim/starship
 dnf copr enable -y aldantanneo/jj-vcs
 dnf config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/shells:zsh-users:zsh-autosuggestions/Fedora_Rawhide/shells:zsh-users:zsh-autosuggestions.repo
+dnf config-manager addrepo --from-repofile=https://pkg.claude-desktop-debian.dev/rpm/claude-desktop.repo
 # Import the GPG key first
 rpm --import https://rpm.releases.hashicorp.com/gpg
 dnf config-manager addrepo --from-repofile=https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
@@ -47,6 +48,7 @@ dnf install -y \
     7zip \
     acpi \
     btop \
+    claude-desktop \
     direnv \
     dmidecode \
     duf \
