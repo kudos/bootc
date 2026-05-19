@@ -26,7 +26,7 @@ dnf swap -y libavcodec-free libavcodec-freeworld --allowerasing
 dnf remove -y pipewire-libs-extra
 # rpmfusion doesn't always have their media packages in sync with Fedora
 dnf config-manager setopt rpmfusion-nonfree-updates-testing.enabled=1 rpmfusion-free-updates-testing.enabled=1
-dnf group install -y multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin --allowerasing
+dnf group install -y multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin --exclude=cdda2wav --exclude=cdrecord --exclude=mkisofs --allowerasing
 dnf config-manager setopt rpmfusion-nonfree-updates-testing.enabled=0 rpmfusion-free-updates-testing.enabled=0
 dnf config-manager setopt fedora-cisco-openh264.enabled=1
 dnf install steam -y
@@ -44,9 +44,10 @@ sed -i 's/\$releasever/42/g' /etc/yum.repos.d/hashicorp.repo
 # Firefox Nightly
 dnf config-manager addrepo --id=mozilla --set=baseurl=https://packages.mozilla.org/rpm/firefox --set=gpgcheck=0 --set=repo_gpgcheck=0
 dnf makecache --refresh
-dnf install -y \
+dnf install -y --exclude=star --exclude=star-libs \
     7zip \
     acpi \
+    bottles \
     btop \
     claude-desktop \
     direnv \
@@ -84,7 +85,6 @@ dnf install -y \
     sysstat \
     tailscale \
     terraform \
-    unar \
     uv \
     vdpauinfo \
     vulkan-tools \
@@ -98,3 +98,21 @@ dnf clean all
 
 # Remove btop and nvtop shortcuts
 rm /usr/share/applications/btop.desktop /usr/share/applications/nvtop.desktop
+
+# Wine/Proton (and Denuvo) need execmem for JIT and code unpacking.
+# The processes end up in kernel_t due to missing file label transitions for
+# Proton binaries under /var/home, so we allow execmem from that domain.
+cat > /tmp/wine-execmem.te << 'EOF'
+module wine-execmem 1.0;
+
+require {
+    type kernel_t;
+    class process { execmem execstack };
+}
+
+allow kernel_t self:process { execmem execstack };
+EOF
+checkmodule -M -m -o /tmp/wine-execmem.mod /tmp/wine-execmem.te
+semodule_package -o /tmp/wine-execmem.pp -m /tmp/wine-execmem.mod
+semodule -i /tmp/wine-execmem.pp
+rm /tmp/wine-execmem.te /tmp/wine-execmem.mod /tmp/wine-execmem.pp
